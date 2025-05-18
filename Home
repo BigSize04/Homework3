@@ -1,0 +1,100 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int ROWS = 4;
+    const int COLS = 5;
+    int i, j;
+
+    int array[4][5];
+
+    // Ввід вручну
+    cout << "Введіть елементи матриці 4x5:\n";
+    for (i = 0; i < ROWS; ++i)
+        for (j = 0; j < COLS; ++j) {
+            cout << "[" << i << "][" << j << "]: ";
+            cin >> array[i][j];
+        }
+
+    // Виведення матриці
+    cout << "\nМатриця:\n";
+    for (i = 0; i < ROWS; ++i) {
+        for (j = 0; j < COLS; ++j)
+            cout << array[i][j] << "\t";
+        cout << endl;
+    }
+
+    // 1. Максимум у стовпці
+    int col;
+    cout << "\nВведіть номер стовпця (0-4): ";
+    cin >> col;
+    int maxCol = array[0][col];
+    for (i = 1; i < ROWS; ++i)
+        if (array[i][col] > maxCol) maxCol = array[i][col];
+    cout << "Максимум у стовпці: " << maxCol << endl;
+
+    // 2. Максимум у рядку
+    int row;
+    cout << "\nВведіть номер рядка (0-3): ";
+    cin >> row;
+    int maxRow = array[row][0];
+    for (j = 1; j < COLS; ++j)
+        if (array[row][j] > maxRow) maxRow = array[row][j];
+    cout << "Максимум у рядку: " << maxRow << endl;
+
+    // 3. Сума негативних і середнє позитивних у стовпці
+    cout << "\nВведіть номер стовпця для обчислень (0-4): ";
+    cin >> col;
+    int sumNeg = 0, sumPos = 0, countPos = 0;
+    for (i = 0; i < ROWS; ++i) {
+        if (array[i][col] < 0) sumNeg += array[i][col];
+        else if (array[i][col] > 0) {
+            sumPos += array[i][col];
+            countPos++;
+        }
+    }
+    cout << "Сума негативних: " << sumNeg << endl;
+    if (countPos > 0)
+        cout << "Середнє позитивних: " << (double)sumPos / countPos << endl;
+    else
+        cout << "Позитивних значень немає" << endl;
+
+    // 4. Обмін стовпців
+    int c1, c2;
+    cout << "\nВведіть два номери стовпців для обміну: ";
+    cin >> c1 >> c2;
+    for (i = 0; i < ROWS; ++i) {
+        int temp = array[i][c1];
+        array[i][c1] = array[i][c2];
+        array[i][c2] = temp;
+    }
+
+    // 5. Обмін рядків
+    int r1, r2;
+    cout << "Введіть два номери рядків для обміну: ";
+    cin >> r1 >> r2;
+    for (j = 0; j < COLS; ++j) {
+        int temp = array[r1][j];
+        array[r1][j] = array[r2][j];
+        array[r2][j] = temp;
+    }
+
+    // 6. Реверс рядка
+    cout << "Введіть номер рядка для реверсу: ";
+    cin >> row;
+    for (j = 0; j < COLS / 2; ++j) {
+        int temp = array[row][j];
+        array[row][j] = array[row][COLS - 1 - j];
+        array[row][COLS - 1 - j] = temp;
+    }
+
+    // Остаточна матриця
+    cout << "\nМатриця після змін:\n";
+    for (i = 0; i < ROWS; ++i) {
+        for (j = 0; j < COLS; ++j)
+            cout << array[i][j] << "\t";
+        cout << endl;
+    }
+
+    return 0;
+}
